@@ -4,6 +4,6 @@
   "render_readme": true,
   "domains": ["aquaflower"],
   "homeassistant": "2023.1.0",
-  "country": ["US"],
+  "country": ["US", "CA", "EU"],
   "iot_class": "cloud_push"
 }
