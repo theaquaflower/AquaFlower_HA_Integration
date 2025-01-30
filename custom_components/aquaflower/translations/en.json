@@ -1,0 +1,47 @@
+{
+    "config": {
+      "step": {
+        "user": {
+          "title": "AquaFlower Login",
+          "description": "Enter your AquaFlower account credentials to connect.",
+          "data": {
+            "username": "Email Address",
+            "password": "Password"
+          }
+        },
+        "select_devices": {
+          "title": "Select Devices",
+          "description": "Choose the AquaFlower devices you want to add to Home Assistant.",
+          "data": {
+            "devices": "Devices"
+          }
+        }
+      },
+      "error": {
+        "invalid_auth": "Invalid email or password. Please try again.",
+        "cannot_connect": "Failed to connect to the AquaFlower service. Please check your network or server status.",
+        "cannot_fetch_devices": "Unable to retrieve devices. Please try again later."
+      },
+      "abort": {
+        "already_configured": "This account is already configured.",
+        "no_devices_found": "No devices were found for this account."
+      }
+    },
+    "options": {
+      "step": {
+        "init": {
+          "title": "AquaFlower Options",
+          "description": "Adjust settings for your AquaFlower integration."
+        }
+      }
+    },
+    "device_automation": {
+      "action_type": {
+        "turn_on_valve": "Turn on AquaFlower valve",
+        "turn_off_valve": "Turn off AquaFlower valve",
+        "start_timer": "Start AquaFlower timer",
+        "cancel_timer": "Cancel AquaFlower timer"
+      }
+    }
+  }
+  

@@ -1,0 +1,6 @@
+DOMAIN = "aquaflower"
+CONF_SECRET = "secret"
+CONF_API_BASE_URL = "api_base_url"
+CONF_ACCESS_TOKEN = "access_token"
+CONF_USER_ID = "user_id"
+CONF_HA_IP = "ha_ip"
