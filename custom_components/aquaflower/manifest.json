@@ -12,6 +12,4 @@
   ],
   "config_flow": true,
   "iot_class": "cloud_push",
-  "icon": "custom_components/aquaflower/static/icon.png",
-  "logo": "custom_components/aquaflower/static/logo.png"
 }
