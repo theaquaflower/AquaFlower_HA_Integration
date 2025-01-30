@@ -1,12 +1,12 @@
 {
   "domain": "aquaflower",
   "name": "AquaFlower",
-  "documentation": "https://github.com/theaquaflower/aquaflower_ha",
-  "issue_tracker": "https://github.com/theaquaflower/AquaFlower_HA_Integration/issues",
+  "codeowners": ["@theaquaflower"],
   "config_flow": true,
   "dependencies": [],
-  "codeowners": ["@theaquaflower"],
+  "documentation": "https://github.com/theaquaflower/aquaflower_ha",
   "iot_class": "cloud_push",
+  "issue_tracker": "https://github.com/theaquaflower/AquaFlower_HA_Integration/issues",
   "requirements": [
     "paho-mqtt==1.6.1",
     "requests>=2.28.0",
