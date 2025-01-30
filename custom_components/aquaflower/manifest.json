@@ -12,5 +12,5 @@
     "python-jose==3.3.0"
   ],
   "config_flow": true,
-  "iot_class": "cloud_push",
+  "iot_class": "cloud_push"
 }
