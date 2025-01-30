@@ -16,7 +16,7 @@ The **AquaFlower** integration allows you to control and monitor your AquaFlower
 
 ### **Step 2: Manual Installation (Use Only If You Skipped Step 1)**
 1. Download the latest release from [GitHub Releases](https://github.com/theaquaflower/aquaflower-home-assistant).
-2. Extract and copy the `aquaflower` folder into:
+2. Extract and copy the `aquaflower` folder into:/config/custom_components/
 3. Restart Home Assistant.
 
 ---
