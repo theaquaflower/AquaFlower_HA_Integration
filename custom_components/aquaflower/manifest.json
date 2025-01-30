@@ -3,6 +3,7 @@
   "name": "AquaFlower",
   "version": "1.0.0",
   "documentation": "https://github.com/theaquaflower/aquaflower_ha",
+  "issue_tracker": "https://github.com/theaquaflower/AquaFlower_HA_Integration/issues",
   "dependencies": [],
   "codeowners": ["@theaquaflower"],
   "requirements": [
