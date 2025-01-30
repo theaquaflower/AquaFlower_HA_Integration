@@ -13,4 +13,6 @@
   ],
   "config_flow": true,
   "iot_class": "cloud_push"
+  "logo": "https://brands.home-assistant.io/aquaflower/icon@2px.png",
+  "icon": "https://brands.home-assistant.io/aquaflower/icon.png"
 }
