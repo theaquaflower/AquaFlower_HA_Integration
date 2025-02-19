@@ -9,7 +9,7 @@ import aiohttp
 from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
-PLATFORMS = [Platform.SWITCH, Platform.NUMBER]
+PLATFORMS = [Platform.SWITCH, Platform.NUMBER, Platform.SENSOR]
 
 
 async def handle_webhook(hass: HomeAssistant, webhook_id: str, request) -> None:
