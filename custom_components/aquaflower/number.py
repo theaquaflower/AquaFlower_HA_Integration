@@ -136,8 +136,8 @@ class AquaFlowerTimer(NumberEntity):
         return False
 
     async def async_update(self):
-        """Fetch the latest timer setting from the backend."""
-        url = f"{self._api_base_url}/device/{self._device_id}/zone/{self._zone_number}/status"
+        """Fetch the latest timer setting from the backend using the new GET API endpoint."""
+        url = f"{self._api_base_url}/zones/{self._device_id}/{self._zone_number}"
         headers = {
             "Authorization": f"Bearer {self._access_token}",
             "Content-Type": "application/json",
@@ -148,15 +148,18 @@ class AquaFlowerTimer(NumberEntity):
                 async with session.get(url, headers=headers, timeout=10) as response:
                     if response.status == 200:
                         data = await response.json()
-
-                        # ✅ Ensure 'state' is properly checked
-                        if "action" in data and data["action"].startswith("timer:"):
-                            self._attr_native_value = int(data["action"].split(":")[1])  # Extract minutes
-                            _LOGGER.info("Updated timer for device %s, zone %s to %d minutes", self._device_id, self._zone_number, self._attr_native_value)
+                        if "timer" in data:
+                            self._attr_native_value = int(data["timer"])
+                            _LOGGER.info(
+                                "Updated timer for device %s, zone %s to %d minutes",
+                                self._device_id,
+                                self._zone_number,
+                                self._attr_native_value
+                            )
                         else:
                             _LOGGER.warning("Unexpected response format: %s", data)
                     else:
                         _LOGGER.error("Failed to fetch timer status: %s - %s", response.status, await response.text())
-
         except Exception as e:
             _LOGGER.error("Error fetching timer status: %s", e)
+
