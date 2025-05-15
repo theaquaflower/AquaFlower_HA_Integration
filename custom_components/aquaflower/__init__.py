@@ -4,6 +4,11 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 from homeassistant.const import Platform
+from homeassistant.components.webhook import (
+    async_register,
+    async_unregister,
+    async_generate_url,
+)
 import aiohttp
 
 from .const import DOMAIN
@@ -56,11 +61,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     # ✅ Register Webhook
     webhook_id = f"aquaflower_{entry.entry_id}"
-    webhook_url = hass.components.webhook.async_generate_url(webhook_id)
+    webhook_url = async_generate_url(hass, webhook_id)
     hass.data[DOMAIN][entry.entry_id]["webhook_url"] = webhook_url
 
-    hass.components.webhook.async_register(
-        DOMAIN, "AquaFlower Webhook", webhook_id, handle_webhook
+    async_register(
+        hass, DOMAIN, "AquaFlower Webhook", webhook_id, handle_webhook
     )
 
     _LOGGER.info(f"AquaFlower Webhook Registered: {webhook_url}")
@@ -71,19 +76,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     user_id = entry.data.get("user_id")
 
     if api_base_url and access_token and user_id:
-        async with async_get_clientsession(hass) as session:
-            try:
-                async with session.post(
-                    f"{api_base_url}/registerWebhook",
-                    json={"user_id": user_id, "webhook_url": webhook_url},
-                    headers={"Authorization": f"Bearer {access_token}"},
-                ) as response:
-                    if response.status == 200:
-                        _LOGGER.info("Webhook successfully registered with AquaFlower backend.")
-                    else:
-                        _LOGGER.error(f"Failed to register webhook with backend: {response.status}")
-            except aiohttp.ClientError as e:
-                _LOGGER.error(f"Error communicating with backend: {e}")
+        session = async_get_clientsession(hass)
+        try:
+            async with session.post(
+                f"{api_base_url}/registerWebhook",
+                json={"user_id": user_id, "webhook_url": webhook_url},
+                headers={"Authorization": f"Bearer {access_token}"},
+            ) as response:
+                if response.status == 200:
+                    _LOGGER.info("Webhook successfully registered with AquaFlower backend.")
+                else:
+                    _LOGGER.error(f"Failed to register webhook with backend: {response.status}")
+        except aiohttp.ClientError as e:
+            _LOGGER.error(f"Error communicating with backend: {e}")
 
     # ✅ Forward entry setup to platforms
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
@@ -93,7 +98,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload AquaFlower config entry."""
     webhook_id = f"aquaflower_{entry.entry_id}"
-    hass.components.webhook.async_unregister(webhook_id)
+    async_unregister(hass, webhook_id)
 
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
