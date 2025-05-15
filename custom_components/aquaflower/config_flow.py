@@ -6,6 +6,7 @@ from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.helpers import aiohttp_client
 from homeassistant.const import CONF_USERNAME, CONF_PASSWORD
+from homeassistant.components.webhook import async_generate_url
 from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
@@ -107,7 +108,7 @@ class AquaFlowerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             # ✅ Generate the webhook URL dynamically
             webhook_id = f"aquaflower_{self.user_id}"
-            self.webhook_url = self.hass.components.webhook.async_generate_url(webhook_id)
+            self.webhook_url = async_generate_url(self.hass, webhook_id)
 
             _LOGGER.info(f"Generated Webhook URL: {self.webhook_url}")
 
@@ -128,8 +129,22 @@ class AquaFlowerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                         _LOGGER.info("Webhook registered with AquaFlower backend.")
                     else:
                         _LOGGER.error(f"Failed to register webhook with backend: {response.status}")
+                        return self.async_show_form(
+                            step_id="confirm_devices",
+                            data_schema=vol.Schema({
+                                vol.Required("devices", default=list(self.devices.keys())): cv.multi_select(self.devices),
+                            }),
+                            errors={"base": "cannot_register_webhook"},
+                        )
             except aiohttp.ClientError as e:
                 _LOGGER.error(f"Error registering webhook: {e}")
+                return self.async_show_form(
+                    step_id="confirm_devices",
+                    data_schema=vol.Schema({
+                        vol.Required("devices", default=list(self.devices.keys())): cv.multi_select(self.devices),
+                    }),
+                    errors={"base": "cannot_connect"},
+                )
 
             return self.async_create_entry(
                 title="AquaFlower",
