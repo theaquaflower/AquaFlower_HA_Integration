@@ -6,7 +6,8 @@
           "description": "Enter your AquaFlower account credentials to connect.",
           "data": {
             "username": "Email Address",
-            "password": "Password"
+            "password": "Password",
+            "ha_ip": "Home Assistant IP Address"
           }
         },
         "select_devices": {
@@ -15,16 +16,22 @@
           "data": {
             "devices": "Devices"
           }
+        },
+        "confirm_devices": {
+          "title": "Confirm Devices",
+          "description": "Confirm your selected devices and complete the setup."
         }
       },
       "error": {
         "invalid_auth": "Invalid email or password. Please try again.",
         "cannot_connect": "Failed to connect to the AquaFlower service. Please check your network or server status.",
-        "cannot_fetch_devices": "Unable to retrieve devices. Please try again later."
+        "cannot_fetch_devices": "Unable to retrieve devices. Please try again later.",
+        "cannot_register_webhook": "Unable to register webhook with AquaFlower service. Please check your network and try again."
       },
       "abort": {
         "already_configured": "This account is already configured.",
-        "no_devices_found": "No devices were found for this account."
+        "no_devices_found": "No devices were found for this account.",
+        "no_devices_selected": "No devices were selected to configure."
       }
     },
     "options": {
